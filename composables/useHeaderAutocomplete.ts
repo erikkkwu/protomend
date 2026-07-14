@@ -1,6 +1,8 @@
-import { computed, ref, type Ref , type ComputedRef } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
+import type { HeaderFlow } from '@/core/commonHeaders';
 import { useFuse } from '@vueuse/integrations/useFuse';
-import { headerNamesFor, type HeaderFlow } from '@/core/commonHeaders';
+import { computed, ref } from 'vue';
+import { headerNamesFor } from '@/core/commonHeaders';
 
 export interface HeaderAutocomplete {
   isOpen: ComputedRef<boolean>;
@@ -26,7 +28,7 @@ export function useHeaderAutocomplete(
   });
 
   const suggestions = computed(() =>
-    name.value.trim().length === 0 ? [] : results.value.map((r) => r.item),
+    name.value.trim().length === 0 ? [] : results.value.map(r => r.item),
   );
 
   const isOpen = computed(() => !dismissed.value && suggestions.value.length > 0);
@@ -56,7 +58,8 @@ export function useHeaderAutocomplete(
   }
 
   function onKeydown(e: KeyboardEvent): void {
-    if (!isOpen.value) return;
+    if (!isOpen.value)
+      return;
     const list = suggestions.value;
     switch (e.key) {
       case 'ArrowDown':
@@ -79,7 +82,8 @@ export function useHeaderAutocomplete(
         const picked = list[highlighted.value];
         if (picked !== undefined) {
           select(picked);
-        } else {
+        }
+        else {
           close();
         }
         break;

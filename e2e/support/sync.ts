@@ -1,6 +1,7 @@
 import type { Worker } from '@playwright/test';
+import type { Config } from '../../core/model';
 import { compileConfig } from '../../core/dnr';
-import { normalizeConfig, type Config } from '../../core/model';
+import { normalizeConfig } from '../../core/model';
 
 interface HeaderInfo {
   header: string;
@@ -15,15 +16,15 @@ interface RuleShape {
 
 function projectRules(rules: RuleShape[]): string {
   const projectHeaders = (headers: HeaderInfo[] = []) =>
-    headers.map((h) => `${h.operation}:${h.header.toLowerCase()}:${h.value ?? ''}`).sort();
+    headers.map(h => `${h.operation}:${h.header.toLowerCase()}:${h.value ?? ''}`).sort();
   const projected = rules
-    .map((r) => ({
+    .map(r => ({
       type: r.action.type,
       req: projectHeaders(r.action.requestHeaders),
       resp: projectHeaders(r.action.responseHeaders),
       regex: r.condition?.regexFilter ?? '',
     }))
-    .map((r) => JSON.stringify(r))
+    .map(r => JSON.stringify(r))
     .sort();
   return JSON.stringify(projected);
 }
@@ -46,8 +47,9 @@ function readState(sw: Worker): Promise<ExtensionState> {
 async function waitFor(check: () => Promise<boolean>, label: string): Promise<void> {
   const deadline = Date.now() + 5000;
   while (Date.now() < deadline) {
-    if (await check()) return;
-    await new Promise((resolve) => setTimeout(resolve, 50));
+    if (await check())
+      return;
+    await new Promise(resolve => setTimeout(resolve, 50));
   }
   throw new Error(`Timed out waiting for ${label}`);
 }

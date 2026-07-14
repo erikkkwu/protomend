@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import '@/assets/tailwind.css';
 import ProfileEditor from '@/components/ProfileEditor.vue';
+import '@/assets/tailwind.css';
 </script>
 
 <template>

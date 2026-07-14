@@ -1,6 +1,7 @@
+import type { Config } from '@/core/model';
 import { browser, defineBackground } from '#imports';
 import { compileConfig } from '@/core/dnr';
-import { selectedProfile, type Config } from '@/core/model';
+import { selectedProfile } from '@/core/model';
 import { configStore } from '@/core/storage';
 
 async function applyConfig(config: Config): Promise<void> {
@@ -8,7 +9,7 @@ async function applyConfig(config: Config): Promise<void> {
 
   const existing = await browser.declarativeNetRequest.getSessionRules();
   await browser.declarativeNetRequest.updateSessionRules({
-    removeRuleIds: existing.map((r) => r.id),
+    removeRuleIds: existing.map(r => r.id),
     addRules: rules,
   });
 

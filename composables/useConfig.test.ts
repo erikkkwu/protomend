@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { nextTick } from 'vue';
 import { fakeBrowser } from 'wxt/testing/fake-browser';
-import { useConfig } from './useConfig';
-import { configStore } from '@/core/storage';
 import { createConfig, createExcludeFilter, createProfile } from '@/core/model';
+import { configStore } from '@/core/storage';
+import { useConfig } from './useConfig';
 
 async function flush(): Promise<void> {
   await nextTick();
-  await new Promise((r) => setTimeout(r, 0));
+  await new Promise(r => setTimeout(r, 0));
   await nextTick();
 }
 
@@ -73,7 +73,7 @@ describe('useConfig actions', () => {
   async function withProfiles(titles: string[]) {
     const store = useConfig();
     await flush();
-    store.config.profiles = titles.map((title) => createProfile({ title }));
+    store.config.profiles = titles.map(title => createProfile({ title }));
     store.config.selectedProfileIndex = 0;
     await flush();
     return store;
@@ -84,7 +84,7 @@ describe('useConfig actions', () => {
     store.selectProfile(1); // B
     store.removeSelectedProfile();
     await flush();
-    expect(store.config.profiles.map((p) => p.title)).toEqual(['A', 'C']);
+    expect(store.config.profiles.map(p => p.title)).toEqual(['A', 'C']);
     expect(store.config.selectedProfileIndex).toBe(1); // now C
   });
 
@@ -93,7 +93,7 @@ describe('useConfig actions', () => {
     store.selectProfile(2); // C (last)
     store.removeSelectedProfile();
     await flush();
-    expect(store.config.profiles.map((p) => p.title)).toEqual(['A', 'B']);
+    expect(store.config.profiles.map(p => p.title)).toEqual(['A', 'B']);
     expect(store.config.selectedProfileIndex).toBe(1); // new last = B
   });
 
@@ -122,8 +122,8 @@ describe('useConfig actions', () => {
     await flush();
     store.removeExcludeFilter(0);
     await flush();
-    expect(store.config.globalExcludeFilters.map((f) => f.pattern)).toEqual(['b']);
-    expect((await configStore.load()).globalExcludeFilters.map((f) => f.pattern)).toEqual(['b']);
+    expect(store.config.globalExcludeFilters.map(f => f.pattern)).toEqual(['b']);
+    expect((await configStore.load()).globalExcludeFilters.map(f => f.pattern)).toEqual(['b']);
   });
 
   it('removeExcludeFilter ignores an out-of-range index', async () => {
@@ -133,7 +133,7 @@ describe('useConfig actions', () => {
     store.removeExcludeFilter(5);
     store.removeExcludeFilter(-1);
     await flush();
-    expect(store.config.globalExcludeFilters.map((f) => f.pattern)).toEqual(['a']);
+    expect(store.config.globalExcludeFilters.map(f => f.pattern)).toEqual(['a']);
   });
 
   it('replaceConfig applies and persists the new config, and later edits still persist', async () => {
@@ -148,7 +148,7 @@ describe('useConfig actions', () => {
     );
     await flush();
 
-    expect(store.config.profiles.map((p) => p.title)).toEqual(['Imported']);
+    expect(store.config.profiles.map(p => p.title)).toEqual(['Imported']);
     expect(store.config.globalExcludeFilters).toEqual([{ pattern: 'ads', enabled: true }]);
     expect((await configStore.load()).profiles[0]?.title).toBe('Imported');
 

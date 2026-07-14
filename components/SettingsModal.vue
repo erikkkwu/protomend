@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { refAutoReset, useClipboard, useFileDialog } from '@vueuse/core';
 import type { Config } from '@/core/model';
+import { refAutoReset, useClipboard, useFileDialog } from '@vueuse/core';
+import { ref } from 'vue';
 import { exportConfig, importConfig } from '@/core/profileJson';
 
 const props = defineProps<{ config: Config }>();
@@ -31,11 +31,13 @@ const { open: openImport, reset: resetImport, onChange: onImportChange } = useFi
 
 onImportChange(async (files) => {
   const file = files?.[0];
-  if (!file) return;
+  if (!file)
+    return;
   try {
     emit('replaceConfig', importConfig(await file.text()));
     importFlash.value = 'success';
-  } catch {
+  }
+  catch {
     importFlash.value = 'error';
   }
   resetImport();
@@ -63,7 +65,9 @@ function download(): void {
     >
       <header class="flex items-center gap-2.5 border-b border-line px-5 py-4">
         <span class="h-2 w-2 rounded-full bg-signal shadow-[0_0_10px_-1px_var(--color-signal)]" />
-        <h2 class="text-[13px] font-bold uppercase tracking-[0.12em] text-ink">Global Settings</h2>
+        <h2 class="text-[13px] font-bold uppercase tracking-[0.12em] text-ink">
+          Global Settings
+        </h2>
         <button
           type="button"
           class="ml-auto flex h-7 w-7 items-center justify-center rounded text-lg leading-none text-ink-faint transition-colors hover:bg-danger/10 hover:text-danger"
@@ -96,16 +100,22 @@ function download(): void {
         <div class="min-w-0 flex-1 px-5 py-4">
           <section v-show="activeTab === 'filters'">
             <div class="list-head mb-1">
-              <h3 class="text-[11px] font-bold uppercase tracking-[0.1em] text-ink">Exclude URL filters</h3>
+              <h3 class="text-[11px] font-bold uppercase tracking-[0.1em] text-ink">
+                Exclude URL filters
+              </h3>
               <span class="count-badge bg-panel">{{ config.globalExcludeFilters.length }}</span>
-              <button type="button" class="add-btn" @click="emit('addFilter')">+ Add</button>
+              <button type="button" class="add-btn" @click="emit('addFilter')">
+                + Add
+              </button>
             </div>
             <p class="mb-3 font-mono text-[10px] leading-relaxed text-ink-faint">
               Requests whose URL matches any pattern below are exempt from all rule modifications
               (for profiles with Filters enabled).
             </p>
 
-            <p v-if="config.globalExcludeFilters.length === 0" class="list-empty">No exclude patterns.</p>
+            <p v-if="config.globalExcludeFilters.length === 0" class="list-empty">
+              No exclude patterns.
+            </p>
 
             <div v-else class="flex flex-col gap-1.5">
               <div
@@ -118,15 +128,19 @@ function download(): void {
                   class="accent-bar"
                   :class="filter.enabled ? 'bg-danger shadow-[0_0_10px_-1px_var(--color-danger)]' : 'bg-ink-faint'"
                 />
-                <input v-model="filter.enabled" type="checkbox" class="switch" title="Enabled" />
-                <input v-model="filter.pattern" class="field flex-1" placeholder="e.g. .*analytics\.com.*" />
-                <button type="button" class="row-del" title="Remove" @click="emit('removeFilter', index)">×</button>
+                <input v-model="filter.enabled" type="checkbox" class="switch" title="Enabled">
+                <input v-model="filter.pattern" class="field flex-1" placeholder="e.g. .*analytics\.com.*">
+                <button type="button" class="row-del" title="Remove" @click="emit('removeFilter', index)">
+                  ×
+                </button>
               </div>
             </div>
           </section>
 
           <section v-show="activeTab === 'share'">
-            <h3 class="mb-1 text-[11px] font-bold uppercase tracking-[0.1em] text-ink">Share settings</h3>
+            <h3 class="mb-1 text-[11px] font-bold uppercase tracking-[0.1em] text-ink">
+              Share settings
+            </h3>
             <p class="mb-3 font-mono text-[10px] leading-relaxed text-ink-faint">
               Export all profiles and global filters as JSON to back up or share with others.
             </p>

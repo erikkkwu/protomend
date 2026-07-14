@@ -1,13 +1,14 @@
+import type { HeaderFlow } from '@/core/commonHeaders';
 import { describe, expect, it } from 'vitest';
 import { ref } from 'vue';
 import { useHeaderAutocomplete } from './useHeaderAutocomplete';
-import type { HeaderFlow } from '@/core/commonHeaders';
 
 function setup(initial = '', flow: HeaderFlow = 'request') {
   const name = ref(initial);
   const flowRef = ref<HeaderFlow>(flow);
   const ac = useHeaderAutocomplete(name, flowRef);
-  if (initial !== '') ac.onInput();
+  if (initial !== '')
+    ac.onInput();
   return { name, flowRef, ac };
 }
 
@@ -66,7 +67,7 @@ describe('useHeaderAutocomplete — selection', () => {
 });
 
 describe('useHeaderAutocomplete — keyboard', () => {
-  it('ArrowDown/ArrowUp wrap the highlight', () => {
+  it('arrowDown/ArrowUp wrap the highlight', () => {
     const { ac } = setup('a');
     const n = ac.suggestions.value.length;
     expect(n).toBeGreaterThan(1);
@@ -78,7 +79,7 @@ describe('useHeaderAutocomplete — keyboard', () => {
     expect(ac.isHighlighted(0)).toBe(true);
   });
 
-  it('Enter accepts the highlighted suggestion', () => {
+  it('enter accepts the highlighted suggestion', () => {
     const { name, ac } = setup('aut');
     ac.onKeydown(key('ArrowDown'));
     const expected = ac.suggestions.value[0];
@@ -87,20 +88,20 @@ describe('useHeaderAutocomplete — keyboard', () => {
     expect(ac.isOpen.value).toBe(false);
   });
 
-  it('Enter with no highlight does not change the name', () => {
+  it('enter with no highlight does not change the name', () => {
     const { name, ac } = setup('aut');
     ac.onKeydown(key('Enter'));
     expect(name.value).toBe('aut');
   });
 
-  it('Escape dismisses but keeps the typed text', () => {
+  it('escape dismisses but keeps the typed text', () => {
     const { name, ac } = setup('aut');
     ac.onKeydown(key('Escape'));
     expect(ac.isOpen.value).toBe(false);
     expect(name.value).toBe('aut');
   });
 
-  it('Tab accepts the highlighted suggestion', () => {
+  it('tab accepts the highlighted suggestion', () => {
     const { name, ac } = setup('aut');
     ac.onKeydown(key('ArrowDown'));
     const expected = ac.suggestions.value[0];
@@ -108,7 +109,7 @@ describe('useHeaderAutocomplete — keyboard', () => {
     expect(name.value).toBe(expected);
   });
 
-  it('Tab with no highlight closes without changing the name', () => {
+  it('tab with no highlight closes without changing the name', () => {
     const { name, ac } = setup('aut');
     ac.onKeydown(key('Tab'));
     expect(ac.isOpen.value).toBe(false);

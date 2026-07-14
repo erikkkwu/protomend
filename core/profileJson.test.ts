@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { exportConfig, importConfig } from './profileJson';
 import { createConfig, createHeaderRule, createProfile, normalizeConfig, normalizeProfile } from './model';
+import { exportConfig, importConfig } from './profileJson';
 
 describe('normalizeConfig', () => {
   it('coerces index-keyed objects back into arrays', () => {

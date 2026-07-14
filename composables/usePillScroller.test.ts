@@ -15,7 +15,8 @@ function makeTrack(scrollWidth = 800, clientWidth = 300): HTMLElement {
     configurable: true,
   });
   el.scrollTo = ((opts: ScrollToOptions) => {
-    if (typeof opts?.left === 'number') el.scrollLeft = opts.left;
+    if (typeof opts?.left === 'number')
+      el.scrollLeft = opts.left;
   }) as typeof el.scrollTo;
   el.setPointerCapture = () => {};
   el.scrollIntoView = () => {};

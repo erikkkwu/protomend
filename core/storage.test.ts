@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { fakeBrowser } from 'wxt/testing/fake-browser';
-import { configStore } from './storage';
 import { createConfig, createProfile } from './model';
+import { configStore } from './storage';
 
 describe('configStore', () => {
   beforeEach(() => {

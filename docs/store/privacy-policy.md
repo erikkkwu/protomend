@@ -1,4 +1,4 @@
-# Privacy Policy — 使用說明
+## Privacy Policy — 使用說明
 
 已發佈為公開 Gist:**https://gist.github.com/erikkkwu/4781f8c7a3271f7eeb14850648093ccf**
 把這個網址填入 Developer Dashboard 的 Privacy policy 欄位。

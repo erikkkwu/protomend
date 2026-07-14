@@ -1,6 +1,6 @@
+import type { ExcludeFilter } from './model';
 import { describe, expect, it } from 'vitest';
 import { compileConfig } from './dnr';
-import type { ExcludeFilter } from './model';
 import { createConfig, createExcludeFilter, createHeaderRule, createProfile } from './model';
 
 function configWith(profile: Parameters<typeof createProfile>[0], globalExcludeFilters: ExcludeFilter[] = []) {
@@ -35,8 +35,8 @@ describe('compileConfig', () => {
       ],
     });
     const ops = compileConfig(config)[0]?.action.requestHeaders;
-    expect(ops?.find((o) => o.header === 'A')?.operation).toBe('set');
-    expect(ops?.find((o) => o.header === 'B')?.operation).toBe('remove');
+    expect(ops?.find(o => o.header === 'A')?.operation).toBe('set');
+    expect(ops?.find(o => o.header === 'B')?.operation).toBe('remove');
   });
 
   it('compiles response headers into a modifyHeaders rule', () => {
@@ -57,8 +57,8 @@ describe('compileConfig', () => {
       [createExcludeFilter({ pattern: 'analytics\\.com' })],
     );
     const rules = compileConfig(config);
-    const allow = rules.find((r) => r.action.type === 'allow');
-    const modify = rules.find((r) => r.action.type === 'modifyHeaders');
+    const allow = rules.find(r => r.action.type === 'allow');
+    const modify = rules.find(r => r.action.type === 'modifyHeaders');
     expect(allow).toBeDefined();
     expect(allow?.condition.regexFilter).toBe('analytics\\.com');
     expect(allow!.priority!).toBeGreaterThan(modify!.priority!);
@@ -69,7 +69,7 @@ describe('compileConfig', () => {
       { useGlobalFilters: false, requestHeaders: [createHeaderRule({ name: 'X', value: '1' })] },
       [createExcludeFilter({ pattern: 'analytics\\.com' })],
     );
-    expect(compileConfig(config).some((r) => r.action.type === 'allow')).toBe(false);
+    expect(compileConfig(config).some(r => r.action.type === 'allow')).toBe(false);
   });
 
   it('skips disabled or empty exclude filters', () => {
@@ -77,7 +77,7 @@ describe('compileConfig', () => {
       { requestHeaders: [createHeaderRule({ name: 'X', value: '1' })] },
       [createExcludeFilter({ pattern: 'a', enabled: false }), createExcludeFilter({ pattern: '  ' })],
     );
-    expect(compileConfig(config).some((r) => r.action.type === 'allow')).toBe(false);
+    expect(compileConfig(config).some(r => r.action.type === 'allow')).toBe(false);
   });
 
   it('matches document requests: every rule declares resourceTypes including main_frame', () => {
@@ -103,7 +103,7 @@ describe('compileConfig', () => {
       },
       [createExcludeFilter({ pattern: 'z' })],
     );
-    const ids = compileConfig(config).map((r) => r.id);
+    const ids = compileConfig(config).map(r => r.id);
     expect(new Set(ids).size).toBe(ids.length);
   });
 });

@@ -1,10 +1,10 @@
-import http from 'node:http';
 import type { AddressInfo } from 'node:net';
+import http from 'node:http';
 
 export interface EchoServer {
   base: string;
   requestHeaders: Map<string, Record<string, string | string[] | undefined>>;
-  close(): Promise<void>;
+  close: () => Promise<void>;
 }
 
 export async function startEchoServer(): Promise<EchoServer> {
@@ -21,7 +21,7 @@ export async function startEchoServer(): Promise<EchoServer> {
     res.setHeader('x-server-tag', 'origin');
     res.end('{}');
   });
-  await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
+  await new Promise<void>(resolve => server.listen(0, '127.0.0.1', resolve));
   const { port } = server.address() as AddressInfo;
   return {
     base: `http://127.0.0.1:${port}`,

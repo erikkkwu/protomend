@@ -1,8 +1,11 @@
+import type { BrowserContext, Page, Worker } from '@playwright/test';
+import type { Config, Profile } from '../../core/model';
+import type { EchoServer } from '../support/echo';
 import path from 'node:path';
-import { chromium, type BrowserContext, type Page, type Worker } from '@playwright/test';
+import { chromium } from '@playwright/test';
 import { test as base, createBdd } from 'playwright-bdd';
-import { createConfig, type Config, type Profile } from '../../core/model';
-import { startEchoServer, type EchoServer } from '../support/echo';
+import { createConfig } from '../../core/model';
+import { startEchoServer } from '../support/echo';
 import { Popup } from '../support/popup';
 import { waitForRulesInSync } from '../support/sync';
 
@@ -27,13 +30,15 @@ export class World {
   ) {}
 
   profile(title: string): Profile {
-    const found = this.config.profiles.find((p) => p.title === title);
-    if (!found) throw new Error(`No profile titled "${title}" in the seeded config`);
+    const found = this.config.profiles.find(p => p.title === title);
+    if (!found)
+      throw new Error(`No profile titled "${title}" in the seeded config`);
     return found;
   }
 
   async ensureSeeded(): Promise<void> {
-    if (this.seeded) return;
+    if (this.seeded)
+      return;
     this.seeded = true;
     await this.ext.sw.evaluate(async (config) => {
       const chrome = (globalThis as { chrome?: any }).chrome;
@@ -52,13 +57,15 @@ export class World {
 
   async visit(): Promise<Page> {
     await this.ensureSeeded();
-    if (!this.sitePage) this.sitePage = await this.ext.context.newPage();
+    if (!this.sitePage)
+      this.sitePage = await this.ext.context.newPage();
     await this.sitePage.goto(`${this.echo.base}/plain`);
     return this.sitePage;
   }
 
   get page(): Page {
-    if (!this.sitePage) throw new Error('No page visited yet — add a "When I visit the test page" step first');
+    if (!this.sitePage)
+      throw new Error('No page visited yet — add a "When I visit the test page" step first');
     return this.sitePage;
   }
 
@@ -74,13 +81,15 @@ export class World {
 
   requestHeader(pathname: string, name: string): string | string[] | undefined {
     const seen = this.echo.requestHeaders.get(pathname);
-    if (!seen) throw new Error(`No request to "${pathname}" reached the echo server`);
+    if (!seen)
+      throw new Error(`No request to "${pathname}" reached the echo server`);
     return seen[name];
   }
 
   fetchedHeader(pathname: string, name: string): string | undefined {
     const headers = this.fetched.get(pathname);
-    if (!headers) throw new Error(`No fetch to "${pathname}" was made — add a "the page fetches" step first`);
+    if (!headers)
+      throw new Error(`No fetch to "${pathname}" was made — add a "the page fetches" step first`);
     return headers[name];
   }
 }
@@ -92,6 +101,7 @@ interface Fixtures {
 }
 
 export const test = base.extend<Fixtures>({
+  // eslint-disable-next-line no-empty-pattern
   echo: async ({}, use) => {
     const server = await startEchoServer();
     await use(server);
