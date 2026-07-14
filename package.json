@@ -1,10 +1,14 @@
 {
   "name": "reheader",
-  "version": "0.1.0",
-  "description": "Reheader: modify HTTP request/response headers via declarativeNetRequest",
-  "private": true,
-  "license": "MIT",
   "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@10.16.1",
+  "description": "Reheader: modify HTTP request/response headers via declarativeNetRequest",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
@@ -12,10 +16,13 @@
     "build:firefox": "wxt build -b firefox",
     "zip": "wxt zip",
     "compile": "vue-tsc --noEmit",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:e2e": "wxt build && bddgen && playwright test",
-    "postinstall": "wxt prepare"
+    "postinstall": "wxt prepare",
+    "prepare": "simple-git-hooks"
   },
   "dependencies": {
     "@vueuse/core": "^14.3.0",
@@ -24,15 +31,25 @@
     "vue": "^3.5.39"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "^9.1.0",
     "@playwright/test": "^1.61.1",
     "@tailwindcss/vite": "^4.3.2",
     "@wxt-dev/module-vue": "^1.0.3",
+    "eslint": "^10.7.0",
     "jsdom": "^29.1.1",
+    "lint-staged": "^17.0.8",
     "playwright-bdd": "^9.2.0",
+    "simple-git-hooks": "^2.13.1",
     "tailwindcss": "^4.3.2",
     "typescript": "^5.7.0",
     "vitest": "^2.1.0",
     "vue-tsc": "^2.1.0",
     "wxt": "^0.20.27"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }

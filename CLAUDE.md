@@ -11,17 +11,18 @@ filters. Redirects, cookie tooling, and on-page tools are out of scope.
 ## Commands
 
 ```bash
-npm install          # runs `wxt prepare` (generates .wxt/ types — needed before compile)
-npm run dev          # Chrome, with HMR (launches its own Chrome; uses --remote-debugging-pipe)
-npm run build        # production build to .output/chrome-mv3/
-npm run compile      # type-check only (vue-tsc --noEmit)
-npm test             # vitest unit tests (core/ + composables/)
-npm test -- -t "allow rules"   # run tests matching a name
-npm test -- core/dnr.test.ts   # run a single test file
+pnpm install         # runs `wxt prepare` (generates .wxt/ types — needed before compile)
+pnpm dev             # Chrome, with HMR (launches its own Chrome; uses --remote-debugging-pipe)
+pnpm build           # production build to .output/chrome-mv3/
+pnpm compile         # type-check only (vue-tsc --noEmit)
+pnpm lint            # ESLint (@antfu/eslint-config) — `pnpm lint:fix` auto-fixes
+pnpm test            # vitest unit tests (core/ + composables/)
+pnpm test -t "allow rules"     # run tests matching a name
+pnpm test core/dnr.test.ts     # run a single test file
 ```
 
-`npm run compile` type-checks **including test files**, so a broken test type fails
-compile. Run both `compile` and `test` before considering a change done.
+`pnpm compile` type-checks **including test files**, so a broken test type fails
+compile. Run `lint`, `compile`, and `test` before considering a change done.
 
 ## Architecture
 
