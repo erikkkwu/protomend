@@ -53,6 +53,23 @@ automatically.
 - Vue component behavior is verified end-to-end against the built bundle
   (`e2e/`), not via component-mount tests.
 
+## Commit messages
+
+Commits follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/):
+
+```
+type(scope): description
+```
+
+- Examples: `feat(profile): add duplicate action`, `fix(dnr): cover main-frame requests`.
+- Breaking changes: append `!` after the type/scope, or add a `BREAKING CHANGE:` footer.
+- `CHANGELOG.md` is generated from these messages with
+  [changelogen](https://github.com/unjs/changelogen), so pick the type accurately —
+  `feat`/`fix` end up in the changelog; use `chore`/`docs`/`refactor`/`test` where they apply.
+
+Maintainers cut releases with `pnpm release` (runs the checks, bumps the version,
+updates `CHANGELOG.md`, then commits, tags, and pushes).
+
 ## Pull requests
 
 - Keep diffs small and focused; unrelated refactors belong in separate PRs.

@@ -19,10 +19,20 @@ pnpm lint            # ESLint (@antfu/eslint-config) — `pnpm lint:fix` auto-fi
 pnpm test            # vitest unit tests (core/ + composables/)
 pnpm test -t "allow rules"     # run tests matching a name
 pnpm test core/dnr.test.ts     # run a single test file
+pnpm release         # lint+compile+test, then changelogen --release --push (bump version, update CHANGELOG.md, commit, tag, push)
 ```
 
 `pnpm compile` type-checks **including test files**, so a broken test type fails
 compile. Run `lint`, `compile`, and `test` before considering a change done.
+
+## Commit messages
+
+Follow [Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/):
+`type(scope): description` — e.g. `feat(profile): add duplicate action`,
+`fix(dnr): cover main-frame requests`. Breaking changes use `!` after the
+type/scope or a `BREAKING CHANGE:` footer. `CHANGELOG.md` is generated from
+these messages with `changelogen`, so the type must be accurate (`feat`/`fix`
+appear in the changelog; use `chore`/`docs`/`refactor`/`test` where they apply).
 
 ## Architecture
 

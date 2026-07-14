@@ -4,6 +4,8 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    commit-message:
+      prefix: chore(deps)
     groups:
       dependencies:
         patterns: ['*']
@@ -11,3 +13,5 @@ updates:
     directory: /
     schedule:
       interval: monthly
+    commit-message:
+      prefix: chore(ci)
