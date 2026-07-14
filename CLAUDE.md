@@ -32,6 +32,12 @@ Two deliberate layers — keep logic out of `.vue` files:
   the manifest from the `entrypoints/` directory layout (background, popup/, options/);
   permissions/host_permissions are declared in `wxt.config.ts`.
 
+**VueUse first.** Before hand-rolling a composable or browser-API wrapper, check whether
+VueUse covers it (`@vueuse/core` / `@vueuse/integrations` are already dependencies — e.g.
+`useClipboard`, `useFileDialog`, `refAutoReset`, `useRafFn`, `useScroll`, `useFuse` are all
+in use). Hand-roll only when VueUse has no fit (e.g. the one-shot JSON download in
+`SettingsModal.vue`), and say why in the PR.
+
 ### The rule-compilation model (`core/dnr.ts`)
 `compileConfig(config)` turns the **selected, enabled** profile into
 `chrome.declarativeNetRequest` **session rules**:
