@@ -45,20 +45,23 @@ wxt.config.ts         manifest: permissions + host_permissions
 ## Develop
 
 ```bash
-npm install          # runs `wxt prepare` (generates .wxt/ types)
-npm run dev          # Chrome, with HMR
-npm run dev:firefox  # Firefox
+pnpm install         # runs `wxt prepare` (generates .wxt/ types)
+pnpm dev             # Chrome, with HMR
+pnpm dev:firefox     # Firefox
 ```
 
 ## Build & test
 
 ```bash
-npm run compile      # type-check (vue-tsc)
-npm test             # vitest unit tests (core/ + composables/)
-npm run test:e2e     # playwright-bdd scenarios against the built extension
-npm run build        # production build to .output/
-npm run zip          # packaged .zip for store upload
+pnpm lint            # ESLint (@antfu/eslint-config)
+pnpm compile         # type-check (vue-tsc)
+pnpm test            # vitest unit tests (core/ + composables/)
+pnpm test:e2e        # playwright-bdd scenarios against the built extension
+pnpm build           # production build to .output/
+pnpm zip             # packaged .zip for store upload
 ```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor guide.
 
 Load the unpacked build from `.output/chrome-mv3/` via
 `chrome://extensions → Load unpacked`.
