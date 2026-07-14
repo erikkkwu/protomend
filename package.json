@@ -47,6 +47,17 @@
     "vue-tsc": "^2.1.0",
     "wxt": "^0.20.27"
   },
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "simple-git-hooks"
+    ],
+    "overrides": {
+      "esbuild": ">=0.28.1",
+      "fx-runner>shell-quote": ">=1.8.4",
+      "node-notifier>uuid": ">=11.1.1",
+      "web-ext-run>tmp": ">=0.2.6"
+    }
+  },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
   },
