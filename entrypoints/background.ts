@@ -16,13 +16,14 @@ async function applyConfig(config: Config): Promise<void> {
   updateBadge(config);
 }
 
-const BADGE_COLOR = '#2ea043';
+const BADGE_ON_COLOR = '#2ea043';
+const BADGE_OFF_COLOR = '#6e7681';
 
 function updateBadge(config: Config): void {
   const profile = selectedProfile(config);
   const active = Boolean(profile?.enabled);
-  void browser.action.setBadgeText({ text: active ? 'on' : '' });
-  void browser.action.setBadgeBackgroundColor({ color: BADGE_COLOR });
+  void browser.action.setBadgeText({ text: active ? 'on' : 'off' });
+  void browser.action.setBadgeBackgroundColor({ color: active ? BADGE_ON_COLOR : BADGE_OFF_COLOR });
 }
 
 export default defineBackground(() => {
