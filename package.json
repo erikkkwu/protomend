@@ -1,7 +1,7 @@
 {
   "name": "reheader",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "packageManager": "pnpm@10.16.1",
   "description": "Reheader: modify HTTP request/response headers via declarativeNetRequest",
