@@ -34,11 +34,12 @@ function operationFor(rule: HeaderRule): HeaderOperation {
 
 function toModifyHeaders(rules: HeaderRule[]): ModifyHeaderInfo[] {
   return rules
-    .filter((r) => r.enabled && r.name.trim() !== '')
+    .filter(r => r.enabled && r.name.trim() !== '')
     .map((r) => {
       const operation = operationFor(r);
       const info: ModifyHeaderInfo = { header: r.name, operation };
-      if (operation !== 'remove') info.value = r.value;
+      if (operation !== 'remove')
+        info.value = r.value;
       return info;
     });
 }
@@ -73,8 +74,8 @@ function modifyRules(profile: Profile, startId: number): Rule[] {
 function excludeAllowRules(filters: ExcludeFilter[], startId: number): Rule[] {
   let id = startId;
   return filters
-    .filter((f) => f.enabled && f.pattern.trim() !== '')
-    .map((f) => ({
+    .filter(f => f.enabled && f.pattern.trim() !== '')
+    .map(f => ({
       id: id++,
       priority: ALLOW_PRIORITY,
       action: { type: 'allow' as const },
@@ -84,10 +85,12 @@ function excludeAllowRules(filters: ExcludeFilter[], startId: number): Rule[] {
 
 export function compileConfig(config: Config): Rule[] {
   const profile = selectedProfile(config);
-  if (!profile || !profile.enabled) return [];
+  if (!profile || !profile.enabled)
+    return [];
 
   const rules = modifyRules(profile, 1);
-  if (rules.length === 0) return [];
+  if (rules.length === 0)
+    return [];
 
   if (profile.useGlobalFilters) {
     const allows = excludeAllowRules(config.globalExcludeFilters, rules.length + 1);

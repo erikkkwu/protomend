@@ -1,6 +1,7 @@
-import { reactive, ref, watch, nextTick, type Ref } from 'vue';
+import type { Ref } from 'vue';
 import type { Config } from '@/core/model';
-import { createExcludeFilter, createProfile, createConfig } from '@/core/model';
+import { nextTick, reactive, ref, watch } from 'vue';
+import { createConfig, createExcludeFilter, createProfile } from '@/core/model';
 import { configStore } from '@/core/storage';
 
 export interface UseConfig {
@@ -38,7 +39,8 @@ export function useConfig(): UseConfig {
   watch(
     config,
     () => {
-      if (suppressWrite || !ready.value) return;
+      if (suppressWrite || !ready.value)
+        return;
       void configStore.save({ ...config });
     },
     { deep: true },
@@ -50,13 +52,15 @@ export function useConfig(): UseConfig {
   }
 
   function removeSelectedProfile(): void {
-    if (config.profiles.length <= 1) return;
+    if (config.profiles.length <= 1)
+      return;
     config.profiles.splice(config.selectedProfileIndex, 1);
     config.selectedProfileIndex = Math.min(config.selectedProfileIndex, config.profiles.length - 1);
   }
 
   function selectProfile(index: number): void {
-    if (index < 0 || index >= config.profiles.length) return;
+    if (index < 0 || index >= config.profiles.length)
+      return;
     config.selectedProfileIndex = index;
   }
 
@@ -65,7 +69,8 @@ export function useConfig(): UseConfig {
   }
 
   function removeExcludeFilter(index: number): void {
-    if (index < 0 || index >= config.globalExcludeFilters.length) return;
+    if (index < 0 || index >= config.globalExcludeFilters.length)
+      return;
     config.globalExcludeFilters.splice(index, 1);
   }
 

@@ -1,5 +1,8 @@
-import { expect, type BrowserContext, type Locator, type Page, type Worker } from '@playwright/test';
-import { normalizeConfig, selectedProfile, type Config } from '../../core/model';
+import type { BrowserContext, Locator, Page, Worker } from '@playwright/test';
+import type { Config } from '../../core/model';
+import { Buffer } from 'node:buffer';
+import { expect } from '@playwright/test';
+import { normalizeConfig, selectedProfile } from '../../core/model';
 import { waitForConfig, waitForRulesInSync } from './sync';
 
 export class Popup {
@@ -22,21 +25,21 @@ export class Popup {
     const toggle = this.toggle('Enabled');
     await this.synced(
       () => (on ? toggle.check() : toggle.uncheck()),
-      (config) => selectedProfile(config)?.enabled === on,
+      config => selectedProfile(config)?.enabled === on,
     );
   }
 
   async disableGlobalFilters(): Promise<void> {
     await this.synced(
       () => this.toggle('Filters').uncheck(),
-      (config) => selectedProfile(config)?.useGlobalFilters === false,
+      config => selectedProfile(config)?.useGlobalFilters === false,
     );
   }
 
   async switchTo(title: string): Promise<void> {
     await this.synced(
       () => this.page.getByRole('button', { name: title, exact: true }).click(),
-      (config) => selectedProfile(config)?.title === title,
+      config => selectedProfile(config)?.title === title,
     );
   }
 
@@ -44,7 +47,7 @@ export class Popup {
     const section = this.page.locator('section', { hasText: 'Request headers' });
     await this.synced(
       () => this.uncheckRowMatching(section.locator('.rule-row'), name),
-      (config) => selectedProfile(config)?.requestHeaders.find((r) => r.name === name)?.enabled === false,
+      config => selectedProfile(config)?.requestHeaders.find(r => r.name === name)?.enabled === false,
     );
   }
 
@@ -53,23 +56,27 @@ export class Popup {
     const modal = this.page.locator('.fixed.inset-0');
     await this.synced(
       () => this.uncheckRowMatching(modal.locator('.rule-row'), pattern),
-      (config) => config.globalExcludeFilters.find((f) => f.pattern === pattern)?.enabled === false,
+      config => config.globalExcludeFilters.find(f => f.pattern === pattern)?.enabled === false,
     );
   }
 
   async importSettings(content: string, seededConfig: Config): Promise<void> {
     await this.openSettings();
     await this.page.getByRole('button', { name: 'Share' }).click();
-    await this.page.locator('input[type=file]').setInputFiles({
+    const [chooser] = await Promise.all([
+      this.page.waitForEvent('filechooser'),
+      this.page.getByRole('button', { name: 'Import JSON' }).click(),
+    ]);
+    await chooser.setFiles({
       name: 'settings.json',
       mimeType: 'application/json',
       buffer: Buffer.from(content),
     });
     const status = this.page.getByText(/Settings imported|Import failed/);
     await status.waitFor();
-    if ((await status.innerText()).includes('Settings imported')) {
+    if ((await status.textContent())?.includes('Settings imported')) {
       const seeded = JSON.stringify(normalizeConfig(seededConfig));
-      await waitForConfig(this.sw, (config) => JSON.stringify(config) !== seeded);
+      await waitForConfig(this.sw, config => JSON.stringify(config) !== seeded);
       await waitForRulesInSync(this.sw);
     }
   }
@@ -89,7 +96,8 @@ export class Popup {
   }
 
   private async openSettings(): Promise<void> {
-    if (this.settingsOpen) return;
+    if (this.settingsOpen)
+      return;
     await this.page.getByTitle('Settings').click();
     this.settingsOpen = true;
   }

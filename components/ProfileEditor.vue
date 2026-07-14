@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, useTemplateRef, watch } from 'vue';
-import { selectedProfile } from '@/core/model';
 import { useConfig } from '@/composables/useConfig';
 import { usePillScroller } from '@/composables/usePillScroller';
+import { selectedProfile } from '@/core/model';
 import HeaderRuleList from './HeaderRuleList.vue';
 import SettingsModal from './SettingsModal.vue';
 
@@ -18,13 +18,14 @@ const pillTrack = useTemplateRef<HTMLElement>('pillTrack');
 const pills = usePillScroller(pillTrack);
 
 function onPillClick(index: number): void {
-  if (pills.wasDrag()) return;
+  if (pills.wasDrag())
+    return;
   selectProfile(index);
 }
 
 watch(
   () => config.selectedProfileIndex,
-  (index) => void pills.scrollIntoView(index),
+  index => void pills.scrollIntoView(index),
 );
 </script>
 
@@ -113,16 +114,16 @@ watch(
           v-model="profile.title"
           class="flex-1 rounded-[5px] border border-line bg-input px-2.5 py-2 font-mono text-xs font-medium transition focus:border-signal-dim focus:shadow-[0_0_0_3px] focus:shadow-signal/25 focus:outline-none"
           placeholder="Profile name"
-        />
+        >
         <label class="flex select-none items-center gap-2 text-xs font-semibold text-ink-dim">
-          <input v-model="profile.enabled" type="checkbox" class="switch" />
+          <input v-model="profile.enabled" type="checkbox" class="switch">
           Enabled
         </label>
         <label
           class="flex select-none items-center gap-2 text-xs font-semibold text-ink-dim"
           title="Apply the global exclude filters to this profile"
         >
-          <input v-model="profile.useGlobalFilters" type="checkbox" class="switch" />
+          <input v-model="profile.useGlobalFilters" type="checkbox" class="switch">
           Filters
         </label>
         <button

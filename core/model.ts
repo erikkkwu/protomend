@@ -61,8 +61,10 @@ function asNumber(raw: unknown): number | undefined {
 }
 
 function toArray<T>(value: unknown): T[] {
-  if (Array.isArray(value)) return value as T[];
-  if (value && typeof value === 'object') return Object.values(value) as T[];
+  if (Array.isArray(value))
+    return value as T[];
+  if (value && typeof value === 'object')
+    return Object.values(value) as T[];
   return [];
 }
 
@@ -81,16 +83,16 @@ const profileSpec: FieldSpec<Profile> = {
   title: { fallback: () => 'Profile 1', coerce: asString },
   enabled: { fallback: () => true, coerce: asBoolean },
   useGlobalFilters: { fallback: () => true, coerce: asBoolean },
-  requestHeaders: { fallback: () => [], coerce: (raw) => toArray<HeaderRule>(raw) },
-  responseHeaders: { fallback: () => [], coerce: (raw) => toArray<HeaderRule>(raw) },
+  requestHeaders: { fallback: () => [], coerce: raw => toArray<HeaderRule>(raw) },
+  responseHeaders: { fallback: () => [], coerce: raw => toArray<HeaderRule>(raw) },
 };
 
 const configSpec: FieldSpec<Config> = {
-  profiles: { fallback: () => [createProfile()], coerce: (raw) => toArray<unknown>(raw).map(normalizeProfile) },
+  profiles: { fallback: () => [createProfile()], coerce: raw => toArray<unknown>(raw).map(normalizeProfile) },
   selectedProfileIndex: { fallback: () => 0, coerce: asNumber },
   globalExcludeFilters: {
     fallback: () => [],
-    coerce: (raw) => toArray<unknown>(raw).map((f) => normalize(excludeFilterSpec, f)),
+    coerce: raw => toArray<unknown>(raw).map(f => normalize(excludeFilterSpec, f)),
   },
 };
 
@@ -116,9 +118,11 @@ export function normalizeProfile(raw: unknown): Profile {
 
 export function normalizeConfig(raw: unknown): Config {
   const config = normalize(configSpec, raw);
-  if (config.profiles.length === 0) config.profiles = [createProfile()];
+  if (config.profiles.length === 0)
+    config.profiles = [createProfile()];
   const inRange = config.selectedProfileIndex >= 0 && config.selectedProfileIndex < config.profiles.length;
-  if (!inRange) config.selectedProfileIndex = 0;
+  if (!inRange)
+    config.selectedProfileIndex = 0;
   return config;
 }
 
