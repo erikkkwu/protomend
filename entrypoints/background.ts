@@ -17,7 +17,7 @@ async function applyConfig(config: Config): Promise<void> {
 }
 
 const BADGE_ON_COLOR = '#2ea043';
-const BADGE_OFF_COLOR = '#6e7681';
+const BADGE_OFF_COLOR = '#da3633';
 
 function updateBadge(config: Config): void {
   const profile = selectedProfile(config);
