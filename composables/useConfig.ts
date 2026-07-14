@@ -1,13 +1,14 @@
 import type { Ref } from 'vue';
 import type { Config } from '@/core/model';
 import { nextTick, reactive, ref, watch } from 'vue';
-import { createConfig, createExcludeFilter, createProfile } from '@/core/model';
+import { cloneProfile, createConfig, createExcludeFilter, createProfile, selectedProfile } from '@/core/model';
 import { configStore } from '@/core/storage';
 
 export interface UseConfig {
   config: Config;
   ready: Ref<boolean>;
   addProfile: () => void;
+  duplicateSelectedProfile: () => void;
   removeSelectedProfile: () => void;
   selectProfile: (index: number) => void;
   addExcludeFilter: () => void;
@@ -51,6 +52,14 @@ export function useConfig(): UseConfig {
     config.selectedProfileIndex = config.profiles.length - 1;
   }
 
+  function duplicateSelectedProfile(): void {
+    const source = selectedProfile(config);
+    if (!source)
+      return;
+    config.profiles.push(cloneProfile(source, `Profile ${config.profiles.length + 1}`));
+    config.selectedProfileIndex = config.profiles.length - 1;
+  }
+
   function removeSelectedProfile(): void {
     if (config.profiles.length <= 1)
       return;
@@ -79,5 +88,5 @@ export function useConfig(): UseConfig {
     void configStore.save({ ...next });
   }
 
-  return { config, ready, addProfile, removeSelectedProfile, selectProfile, addExcludeFilter, removeExcludeFilter, replaceConfig };
+  return { config, ready, addProfile, duplicateSelectedProfile, removeSelectedProfile, selectProfile, addExcludeFilter, removeExcludeFilter, replaceConfig };
 }

@@ -8,7 +8,7 @@ import SettingsModal from './SettingsModal.vue';
 
 const props = defineProps<{ fullscreen?: boolean }>();
 
-const { config, ready, addProfile, removeSelectedProfile, selectProfile, addExcludeFilter, removeExcludeFilter, replaceConfig } = useConfig();
+const { config, ready, addProfile, duplicateSelectedProfile, removeSelectedProfile, selectProfile, addExcludeFilter, removeExcludeFilter, replaceConfig } = useConfig();
 
 const profile = computed(() => selectedProfile(config));
 
@@ -128,7 +128,15 @@ watch(
         </label>
         <button
           type="button"
-          class="ml-auto rounded-[5px] border border-line bg-raised px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-ink-dim transition-all hover:border-danger hover:text-danger disabled:opacity-40 disabled:hover:border-line disabled:hover:text-ink-dim"
+          class="ml-auto rounded-[5px] border border-line bg-raised px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-ink-dim transition-all hover:border-ink-faint hover:text-ink"
+          title="Duplicate this profile"
+          @click="duplicateSelectedProfile"
+        >
+          Duplicate
+        </button>
+        <button
+          type="button"
+          class="rounded-[5px] border border-line bg-raised px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-ink-dim transition-all hover:border-danger hover:text-danger disabled:opacity-40 disabled:hover:border-line disabled:hover:text-ink-dim"
           :disabled="config.profiles.length <= 1"
           @click="removeSelectedProfile"
         >

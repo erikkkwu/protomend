@@ -12,6 +12,10 @@ _Avoid_: preset, configuration set
 A single header modification (name + value) within a profile, for either the request or the response side. An empty value means "remove the header"; a non-empty value means "set it". Each rule has its own on/off toggle.
 _Avoid_: header entry, modification
 
+**Duplicate**:
+Creating a new profile as an independent deep copy of the currently selected profile — same header rules and toggles, title suffixed with `(copy)`. Editing the duplicate never affects the source.
+_Avoid_: clone, copy (as a noun)
+
 **Global Exclude Filter**:
 A regex URL pattern, defined once for the whole extension, that exempts matching requests from all modifications. Each filter has its own on/off toggle.
 _Avoid_: allow rule (DNR implementation term), blacklist

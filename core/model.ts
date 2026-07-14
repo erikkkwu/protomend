@@ -112,6 +112,15 @@ export function createConfig(overrides: Partial<Config> = {}): Config {
   return build(configSpec, overrides);
 }
 
+export function cloneProfile(source: Profile, fallbackTitle: string): Profile {
+  return createProfile({
+    ...source,
+    title: source.title ? `${source.title} (copy)` : fallbackTitle,
+    requestHeaders: source.requestHeaders.map(rule => ({ ...rule })),
+    responseHeaders: source.responseHeaders.map(rule => ({ ...rule })),
+  });
+}
+
 export function normalizeProfile(raw: unknown): Profile {
   return normalize(profileSpec, raw);
 }

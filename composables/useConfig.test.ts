@@ -105,6 +105,34 @@ describe('useConfig actions', () => {
     expect(store.config.selectedProfileIndex).toBe(0);
   });
 
+  it('duplicateSelectedProfile appends a copy of the selected profile, selects it, and persists', async () => {
+    const store = await withProfiles(['A', 'B']);
+    store.selectProfile(0);
+    store.config.profiles[0]!.requestHeaders.push({ name: 'X-Env', value: 'prod', enabled: true });
+    await flush();
+
+    store.duplicateSelectedProfile();
+    await flush();
+
+    expect(store.config.profiles.map(p => p.title)).toEqual(['A', 'B', 'A (copy)']);
+    expect(store.config.selectedProfileIndex).toBe(2);
+    const stored = await configStore.load();
+    expect(stored.profiles[2]?.requestHeaders).toEqual([{ name: 'X-Env', value: 'prod', enabled: true }]);
+  });
+
+  it('duplicateSelectedProfile keeps the copy independent from the source', async () => {
+    const store = await withProfiles(['A']);
+    store.config.profiles[0]!.requestHeaders.push({ name: 'X-Env', value: 'prod', enabled: true });
+    await flush();
+
+    store.duplicateSelectedProfile();
+    await flush();
+    store.config.profiles[1]!.requestHeaders[0]!.value = 'staging';
+    await flush();
+
+    expect(store.config.profiles[0]!.requestHeaders[0]!.value).toBe('prod');
+  });
+
   it('addExcludeFilter appends an empty enabled filter and persists', async () => {
     const store = await withProfiles(['A']);
     store.addExcludeFilter();
