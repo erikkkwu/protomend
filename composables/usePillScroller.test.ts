@@ -9,7 +9,7 @@ function makeTrack(scrollWidth = 800, clientWidth = 300): HTMLElement {
   let sl = 0;
   Object.defineProperty(el, 'scrollLeft', {
     get: () => sl,
-    set: (v) => {
+    set: (v: number) => {
       sl = Math.max(0, Math.min(v, scrollWidth - clientWidth));
     },
     configurable: true,
@@ -122,11 +122,11 @@ describe('usePillScroller — inertia', () => {
   beforeEach(() => {
     queue = [];
     raf = globalThis.requestAnimationFrame;
-    globalThis.requestAnimationFrame = ((cb: FrameRequestCallback) => {
+    globalThis.requestAnimationFrame = (cb: FrameRequestCallback) => {
       queue.push(cb);
       return queue.length;
-    }) as typeof requestAnimationFrame;
-    globalThis.cancelAnimationFrame = (() => {}) as typeof cancelAnimationFrame;
+    };
+    globalThis.cancelAnimationFrame = () => {};
   });
 
   afterEach(() => {

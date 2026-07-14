@@ -18,7 +18,7 @@ export const configStore: ConfigStore = {
   async load() {
     return normalizeConfig(await configItem.getValue());
   },
-  save(config) {
+  async save(config) {
     return configItem.setValue(config);
   },
   subscribe(callback) {

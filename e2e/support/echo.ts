@@ -26,7 +26,7 @@ export async function startEchoServer(): Promise<EchoServer> {
   return {
     base: `http://127.0.0.1:${port}`,
     requestHeaders,
-    close: () =>
+    close: async () =>
       new Promise((resolve) => {
         server.close(() => resolve());
         server.closeAllConnections();

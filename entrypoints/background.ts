@@ -21,12 +21,12 @@ const BADGE_COLOR = '#2ea043';
 function updateBadge(config: Config): void {
   const profile = selectedProfile(config);
   const active = Boolean(profile?.enabled);
-  browser.action.setBadgeText({ text: active ? 'on' : '' });
-  browser.action.setBadgeBackgroundColor({ color: BADGE_COLOR });
+  void browser.action.setBadgeText({ text: active ? 'on' : '' });
+  void browser.action.setBadgeBackgroundColor({ color: BADGE_COLOR });
 }
 
 export default defineBackground(() => {
-  configStore.load().then(applyConfig);
+  void configStore.load().then(applyConfig);
   configStore.subscribe((config) => {
     void applyConfig(config);
   });

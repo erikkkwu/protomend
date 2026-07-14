@@ -36,6 +36,7 @@
     "@tailwindcss/vite": "^4.3.2",
     "@wxt-dev/module-vue": "^1.0.3",
     "eslint": "^10.7.0",
+    "eslint-plugin-format": "^2.0.1",
     "jsdom": "^29.1.1",
     "lint-staged": "^17.0.8",
     "playwright-bdd": "^9.2.0",
@@ -45,17 +46,6 @@
     "vitest": "^4.1.10",
     "vue-tsc": "^2.1.0",
     "wxt": "^0.20.27"
-  },
-  "pnpm": {
-    "ignoredBuiltDependencies": [
-      "simple-git-hooks"
-    ],
-    "overrides": {
-      "esbuild": ">=0.28.1",
-      "fx-runner>shell-quote": ">=1.8.4",
-      "node-notifier>uuid": ">=11.1.1",
-      "web-ext-run>tmp": ">=0.2.6"
-    }
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"

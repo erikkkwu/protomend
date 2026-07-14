@@ -24,21 +24,21 @@ export class Popup {
   async setProfileEnabled(on: boolean): Promise<void> {
     const toggle = this.toggle('Enabled');
     await this.synced(
-      () => (on ? toggle.check() : toggle.uncheck()),
+      async () => (on ? toggle.check() : toggle.uncheck()),
       config => selectedProfile(config)?.enabled === on,
     );
   }
 
   async disableGlobalFilters(): Promise<void> {
     await this.synced(
-      () => this.toggle('Filters').uncheck(),
+      async () => this.toggle('Filters').uncheck(),
       config => selectedProfile(config)?.useGlobalFilters === false,
     );
   }
 
   async switchTo(title: string): Promise<void> {
     await this.synced(
-      () => this.page.getByRole('button', { name: title, exact: true }).click(),
+      async () => this.page.getByRole('button', { name: title, exact: true }).click(),
       config => selectedProfile(config)?.title === title,
     );
   }
@@ -46,7 +46,7 @@ export class Popup {
   async disableRequestRule(name: string): Promise<void> {
     const section = this.page.locator('section', { hasText: 'Request headers' });
     await this.synced(
-      () => this.uncheckRowMatching(section.locator('.rule-row'), name),
+      async () => this.uncheckRowMatching(section.locator('.rule-row'), name),
       config => selectedProfile(config)?.requestHeaders.find(r => r.name === name)?.enabled === false,
     );
   }
@@ -55,7 +55,7 @@ export class Popup {
     await this.openSettings();
     const modal = this.page.locator('.fixed.inset-0');
     await this.synced(
-      () => this.uncheckRowMatching(modal.locator('.rule-row'), pattern),
+      async () => this.uncheckRowMatching(modal.locator('.rule-row'), pattern),
       config => config.globalExcludeFilters.find(f => f.pattern === pattern)?.enabled === false,
     );
   }
@@ -108,7 +108,7 @@ export class Popup {
       const row = rows.nth(i);
       const inputs = row.locator('input');
       const values = await Promise.all(
-        Array.from({ length: await inputs.count() }, (_, j) => inputs.nth(j).inputValue()),
+        Array.from({ length: await inputs.count() }, async (_, j) => inputs.nth(j).inputValue()),
       );
       if (values.includes(inputValue)) {
         await row.getByTitle('Enabled').uncheck();

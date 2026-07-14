@@ -27,7 +27,7 @@ export function useConfig(): UseConfig {
     suppressWrite = false;
   }
 
-  configStore.load().then(async (loaded) => {
+  void configStore.load().then(async (loaded) => {
     await applyExternal(loaded);
     ready.value = true;
   });

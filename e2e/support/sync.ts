@@ -34,7 +34,7 @@ interface ExtensionState {
   rules: RuleShape[];
 }
 
-function readState(sw: Worker): Promise<ExtensionState> {
+async function readState(sw: Worker): Promise<ExtensionState> {
   return sw.evaluate(async () => {
     const chrome = (globalThis as { chrome?: any }).chrome;
     return {

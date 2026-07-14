@@ -76,7 +76,9 @@
   position: relative;
   cursor: pointer;
   flex: none;
-  transition: background 0.2s, border-color 0.2s;
+  transition:
+    background 0.2s,
+    border-color 0.2s;
   &::after {
     content: '';
     position: absolute;
@@ -86,7 +88,9 @@
     height: 14px;
     border-radius: 50%;
     background: var(--color-ink-faint);
-    transition: transform 0.2s, background 0.2s;
+    transition:
+      transform 0.2s,
+      background 0.2s;
   }
   &:checked {
     background: var(--color-signal-dim);

@@ -63,7 +63,7 @@ function asNumber(raw: unknown): number | undefined {
 function toArray<T>(value: unknown): T[] {
   if (Array.isArray(value))
     return value as T[];
-  if (value && typeof value === 'object')
+  if (typeof value === 'object' && value !== null)
     return Object.values(value) as T[];
   return [];
 }
