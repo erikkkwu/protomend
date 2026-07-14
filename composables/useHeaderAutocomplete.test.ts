@@ -71,11 +71,11 @@ describe('useHeaderAutocomplete — keyboard', () => {
     const n = ac.suggestions.value.length;
     expect(n).toBeGreaterThan(1);
     ac.onKeydown(key('ArrowDown'));
-    expect(ac.highlighted.value).toBe(0);
+    expect(ac.isHighlighted(0)).toBe(true);
     ac.onKeydown(key('ArrowUp'));
-    expect(ac.highlighted.value).toBe(n - 1);
+    expect(ac.isHighlighted(n - 1)).toBe(true);
     ac.onKeydown(key('ArrowDown'));
-    expect(ac.highlighted.value).toBe(0);
+    expect(ac.isHighlighted(0)).toBe(true);
   });
 
   it('Enter accepts the highlighted suggestion', () => {
@@ -118,6 +118,25 @@ describe('useHeaderAutocomplete — keyboard', () => {
   it('ignores keys while closed', () => {
     const { ac } = setup('X-Custom');
     ac.onKeydown(key('ArrowDown'));
-    expect(ac.highlighted.value).toBe(-1);
+    expect(ac.isHighlighted(0)).toBe(false);
+  });
+});
+
+describe('useHeaderAutocomplete — highlight', () => {
+  it('isHighlighted reports only the highlighted index', () => {
+    const { ac } = setup('a');
+    expect(ac.isHighlighted(0)).toBe(false);
+    ac.onKeydown(key('ArrowDown'));
+    expect(ac.isHighlighted(0)).toBe(true);
+    expect(ac.isHighlighted(1)).toBe(false);
+  });
+
+  it('highlight(i) makes Enter accept that suggestion', () => {
+    const { name, ac } = setup('a');
+    const expected = ac.suggestions.value[1];
+    ac.highlight(1);
+    expect(ac.isHighlighted(1)).toBe(true);
+    ac.onKeydown(key('Enter'));
+    expect(name.value).toBe(expected);
   });
 });

@@ -6,7 +6,7 @@ import { useHeaderAutocomplete } from '@/composables/useHeaderAutocomplete';
 const name = defineModel<string>({ required: true });
 const props = defineProps<{ flow: HeaderFlow; placeholder?: string; dimmed?: boolean }>();
 
-const { isOpen, suggestions, highlighted, onInput, onKeydown, select, close } = useHeaderAutocomplete(
+const { isOpen, suggestions, isHighlighted, highlight, onInput, onKeydown, select, close } = useHeaderAutocomplete(
   name,
   toRef(()=> props.flow),
 );
@@ -37,9 +37,9 @@ function pick(suggestion: string): void {
         v-for="(suggestion, i) in suggestions"
         :key="suggestion"
         class="cursor-pointer px-2.5 py-1.5 font-mono text-xs transition-colors"
-        :class="i === highlighted ? 'bg-signal/15 text-ink' : 'text-ink-dim hover:bg-line-soft hover:text-ink'"
+        :class="isHighlighted(i) ? 'bg-signal/15 text-ink' : 'text-ink-dim hover:bg-line-soft hover:text-ink'"
         @mousedown.prevent="pick(suggestion)"
-        @mousemove="highlighted = i"
+        @mousemove="highlight(i)"
       >
         {{ suggestion }}
       </li>
