@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
+import { refAutoReset, useClipboard, useFileDialog } from '@vueuse/core';
 import type { Config } from '@/core/model';
 import { exportConfig, importConfig } from '@/core/profileJson';
 
@@ -18,21 +19,27 @@ const tabs: { id: Tab; label: string; glyph: string }[] = [
   { id: 'share', label: 'Share', glyph: '⇄' },
 ];
 
-function useFlash(durationMs: number) {
-  let timer: ReturnType<typeof setTimeout> | undefined;
-  return reactive({
-    state: null as 'success' | 'error' | null,
-    flash(next: 'success' | 'error') {
-      this.state = next;
-      clearTimeout(timer);
-      timer = setTimeout(() => (this.state = null), durationMs);
-    },
-  });
-}
+const downloaded = refAutoReset(false, 1500);
+const importFlash = refAutoReset<'success' | 'error' | null>(null, 3000);
 
-const downloadFlash = useFlash(1500);
-const copyFlash = useFlash(1500);
-const importFlash = useFlash(3000);
+const { copy, copied } = useClipboard({ source: () => exportConfig(props.config) });
+
+const { open: openImport, reset: resetImport, onChange: onImportChange } = useFileDialog({
+  accept: 'application/json',
+  multiple: false,
+});
+
+onImportChange(async (files) => {
+  const file = files?.[0];
+  if (!file) return;
+  try {
+    emit('replaceConfig', importConfig(await file.text()));
+    importFlash.value = 'success';
+  } catch {
+    importFlash.value = 'error';
+  }
+  resetImport();
+});
 
 function download(): void {
   const blob = new Blob([exportConfig(props.config)], { type: 'application/json' });
@@ -42,25 +49,7 @@ function download(): void {
   link.download = 'reheader-settings.json';
   link.click();
   URL.revokeObjectURL(url);
-  downloadFlash.flash('success');
-}
-
-async function copy(): Promise<void> {
-  await navigator.clipboard.writeText(exportConfig(props.config));
-  copyFlash.flash('success');
-}
-
-async function importFile(event: Event): Promise<void> {
-  const input = event.target as HTMLInputElement;
-  const file = input.files?.[0];
-  if (!file) return;
-  try {
-    emit('replaceConfig', importConfig(await file.text()));
-    importFlash.flash('success');
-  } catch {
-    importFlash.flash('error');
-  }
-  input.value = '';
+  downloaded.value = true;
 }
 </script>
 
@@ -148,30 +137,31 @@ async function importFile(event: Event): Promise<void> {
                 @click="download"
               >
                 <Transition name="swap" mode="out-in">
-                  <span v-if="downloadFlash.state" key="done" class="block">✓ Settings downloaded</span>
+                  <span v-if="downloaded" key="done" class="block">✓ Settings downloaded</span>
                   <span v-else key="idle" class="block">↓ Download JSON</span>
                 </Transition>
               </button>
               <button
                 type="button"
                 class="rounded-[5px] border border-line bg-panel px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-ink-dim transition-all hover:border-ink-faint hover:text-ink"
-                @click="copy"
+                @click="copy()"
               >
                 <Transition name="swap" mode="out-in">
-                  <span v-if="copyFlash.state" key="done" class="block text-signal">✓ Copied to clipboard</span>
+                  <span v-if="copied" key="done" class="block text-signal">✓ Copied to clipboard</span>
                   <span v-else key="idle" class="block">⧉ Copy JSON</span>
                 </Transition>
               </button>
-              <label
-                class="block cursor-pointer rounded-[5px] border border-line bg-panel px-3 py-2 text-center text-[11px] font-semibold uppercase tracking-wide text-ink-dim transition-all hover:border-ink-faint hover:text-ink"
+              <button
+                type="button"
+                class="rounded-[5px] border border-line bg-panel px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-ink-dim transition-all hover:border-ink-faint hover:text-ink"
+                @click="openImport()"
               >
                 <Transition name="swap" mode="out-in">
-                  <span v-if="importFlash.state === 'success'" key="done" class="block text-signal">✓ Settings imported</span>
-                  <span v-else-if="importFlash.state === 'error'" key="fail" class="block text-danger">✗ Import failed: not a valid settings JSON</span>
+                  <span v-if="importFlash === 'success'" key="done" class="block text-signal">✓ Settings imported</span>
+                  <span v-else-if="importFlash === 'error'" key="fail" class="block text-danger">✗ Import failed: not a valid settings JSON</span>
                   <span v-else key="idle" class="block">↑ Import JSON</span>
                 </Transition>
-                <input type="file" accept="application/json" class="hidden" @change="importFile" />
-              </label>
+              </button>
             </div>
           </section>
         </div>

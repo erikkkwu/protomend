@@ -1,6 +1,5 @@
 import { nextTick, ref, type Ref } from 'vue';
-import { useScroll } from '@vueuse/core';
-import { tryOnUnmounted } from '@vueuse/shared';
+import { useRafFn, useScroll } from '@vueuse/core';
 
 const DRAG_THRESHOLD_PX = 10;
 
@@ -31,13 +30,19 @@ export function usePillScroller(trackRef: Readonly<Ref<HTMLElement | null | unde
   let lastX = 0;
   let lastT = 0;
   let velocity = 0;
-  let inertiaFrame = 0;
+  let inertiaVelocity = 0;
+
+  const inertia = useRafFn(
+    () => {
+      inertiaVelocity *= INERTIA_DECAY;
+      x.value -= inertiaVelocity;
+      if (Math.abs(inertiaVelocity) <= 0.5) inertia.pause();
+    },
+    { immediate: false },
+  );
 
   function stopInertia(): void {
-    if (inertiaFrame) {
-      cancelAnimationFrame(inertiaFrame);
-      inertiaFrame = 0;
-    }
+    inertia.pause();
   }
 
   function onPointerdown(e: PointerEvent): void {
@@ -81,13 +86,8 @@ export function usePillScroller(trackRef: Readonly<Ref<HTMLElement | null | unde
   }
 
   function startInertia(): void {
-    let v = velocity * 16;
-    const step = (): void => {
-      v *= INERTIA_DECAY;
-      x.value -= v;
-      inertiaFrame = Math.abs(v) > 0.5 ? requestAnimationFrame(step) : 0;
-    };
-    inertiaFrame = requestAnimationFrame(step);
+    inertiaVelocity = velocity * 16;
+    inertia.resume();
   }
 
   function onWheel(e: WheelEvent): void {
@@ -111,8 +111,6 @@ export function usePillScroller(trackRef: Readonly<Ref<HTMLElement | null | unde
     const pill = track.children[index];
     pill?.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
   }
-
-  tryOnUnmounted(stopInertia);
 
   return { onPointerdown, onPointermove, onPointerup, onWheel, isDragging, wasDrag, scrollIntoView, stop: stopInertia };
 }
