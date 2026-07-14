@@ -108,7 +108,7 @@ export function usePillScroller(trackRef: Readonly<Ref<HTMLElement | null | unde
     await nextTick();
     const track = trackRef.value;
     if (!track) return;
-    const pill = track.children[index] as HTMLElement | undefined;
+    const pill = track.children[index];
     pill?.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
   }
 
