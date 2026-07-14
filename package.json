@@ -1,0 +1,38 @@
+{
+  "name": "reheader",
+  "version": "0.1.0",
+  "description": "Reheader: modify HTTP request/response headers via declarativeNetRequest",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "compile": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "wxt build && bddgen && playwright test",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "@vueuse/core": "^14.3.0",
+    "@vueuse/integrations": "^14.3.0",
+    "fuse.js": "^7.4.2",
+    "vue": "^3.5.39"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@tailwindcss/vite": "^4.3.2",
+    "@wxt-dev/module-vue": "^1.0.3",
+    "jsdom": "^29.1.1",
+    "playwright-bdd": "^9.2.0",
+    "tailwindcss": "^4.3.2",
+    "typescript": "^5.7.0",
+    "vitest": "^2.1.0",
+    "vue-tsc": "^2.1.0",
+    "wxt": "^0.20.27"
+  }
+}

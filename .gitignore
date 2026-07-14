@@ -1,0 +1,10 @@
+node_modules/
+.output/
+.wxt/
+stats.html
+*.log
+.DS_Store
+.idea/
+.features-gen/
+test-results/
+playwright-report/

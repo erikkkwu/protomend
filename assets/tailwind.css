@@ -1,0 +1,145 @@
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 500 800;
+  font-display: swap;
+  src: url('/fonts/archivo.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fonts/jetbrainsmono.woff2') format('woff2');
+}
+
+@import 'tailwindcss';
+
+@theme {
+  --color-bg: #0b0e13;
+  --color-raised: #12161d;
+  --color-input: #0e1218;
+  --color-panel: #151a22;
+  --color-line: #232b36;
+  --color-line-soft: #1b222c;
+
+  --color-ink: #e6edf3;
+  --color-ink-dim: #9aa7b4;
+  --color-ink-faint: #5c6773;
+
+  --color-signal: #7ee787;
+  --color-signal-dim: #2ea043;
+  --color-amber: #f2cc60;
+  --color-request: #58a6ff;
+  --color-response: #d2a8ff;
+  --color-danger: #ff7b72;
+
+  --font-sans: 'Archivo', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@theme {
+  --animate-fade: fade 0.4s ease;
+  @keyframes fade {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* toggle switch, built once as a component so markup stays clean */
+@utility switch {
+  appearance: none;
+  width: 34px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--color-line);
+  border: 1px solid var(--color-line);
+  position: relative;
+  cursor: pointer;
+  flex: none;
+  transition: background 0.2s, border-color 0.2s;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--color-ink-faint);
+    transition: transform 0.2s, background 0.2s;
+  }
+  &:checked {
+    background: var(--color-signal-dim);
+    border-color: var(--color-signal);
+  }
+  &:checked::after {
+    transform: translateX(16px);
+    background: var(--color-bg);
+  }
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-signal) 25%, transparent);
+  }
+}
+
+/* Shared rule-list atoms — used by HeaderRuleList and SettingsModal's exclude list. */
+@utility list-head {
+  @apply mb-2.5 flex items-center gap-2.5;
+}
+@utility count-badge {
+  @apply min-w-[18px] rounded-full border border-line bg-raised px-1.5 text-center font-mono text-[10px] text-ink-faint;
+}
+@utility add-btn {
+  @apply ml-auto rounded px-1.5 py-1 text-[11px] font-bold tracking-wide text-signal transition-colors hover:bg-signal/15;
+}
+@utility list-empty {
+  @apply font-mono text-[11px] text-ink-faint;
+}
+@utility rule-row {
+  @apply relative flex items-center gap-2 rounded-[5px] border border-line-soft bg-panel py-1.5 pl-3.5 pr-2.5;
+}
+@utility accent-bar {
+  @apply absolute inset-y-1.5 left-0 w-[3px] rounded-[3px];
+}
+@utility field {
+  @apply min-w-0 rounded-[5px] border border-line bg-input px-2.5 py-1.5 font-mono text-xs transition focus:border-signal-dim focus:shadow-[0_0_0_3px] focus:shadow-signal/25 focus:outline-none;
+}
+@utility row-del {
+  @apply flex h-6 w-6 shrink-0 items-center justify-center rounded text-lg leading-none text-ink-faint transition-all hover:bg-danger/10 hover:text-danger;
+}
+
+/* Vue <Transition name="swap"> — in-button status text crossfade. */
+.swap-enter-active,
+.swap-leave-active {
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+.swap-enter-from {
+  opacity: 0;
+  transform: translateY(5px);
+}
+.swap-leave-to {
+  opacity: 0;
+  transform: translateY(-5px);
+}
