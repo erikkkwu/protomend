@@ -1,11 +1,12 @@
-import { computed, ref, type Ref } from 'vue';
+import { computed, ref, type Ref , type ComputedRef } from 'vue';
 import { useFuse } from '@vueuse/integrations/useFuse';
 import { headerNamesFor, type HeaderFlow } from '@/core/commonHeaders';
 
 export interface HeaderAutocomplete {
-  isOpen: Ref<boolean>;
-  suggestions: Ref<string[]>;
-  highlighted: Ref<number>;
+  isOpen: ComputedRef<boolean>;
+  suggestions: ComputedRef<string[]>;
+  isHighlighted: (index: number) => boolean;
+  highlight: (index: number) => void;
   onInput: () => void;
   onKeydown: (e: KeyboardEvent) => void;
   select: (name: string) => void;
@@ -29,6 +30,14 @@ export function useHeaderAutocomplete(
   );
 
   const isOpen = computed(() => !dismissed.value && suggestions.value.length > 0);
+
+  function isHighlighted(index: number): boolean {
+    return highlighted.value === index;
+  }
+
+  function highlight(index: number): void {
+    highlighted.value = index;
+  }
 
   function onInput(): void {
     dismissed.value = false;
@@ -83,9 +92,10 @@ export function useHeaderAutocomplete(
   }
 
   return {
-    isOpen: isOpen as Ref<boolean>,
+    isOpen,
     suggestions,
-    highlighted,
+    isHighlighted,
+    highlight,
     onInput,
     onKeydown,
     select,
