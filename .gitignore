@@ -8,3 +8,5 @@ stats.html
 .features-gen/
 test-results/
 playwright-report/
+.claude/
+.env*
