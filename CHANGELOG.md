@@ -1,6 +1,19 @@
 # Changelog
 
 
+## v0.3.0
+
+[compare changes](https://github.com/erikkkwu/protomend/compare/v0.2.1...v0.3.0)
+
+### 🏡 Chore
+
+- Add font OFL license notices and tighten gitignore ([eeec903](https://github.com/erikkkwu/protomend/commit/eeec903))
+- Rename project to Protomend ([bfe8834](https://github.com/erikkkwu/protomend/commit/bfe8834))
+
+### ❤️ Contributors
+
+- Erikwu ([@erikkkwu](https://github.com/erikkkwu))
+
 ## v0.2.1
 
 [compare changes](https://github.com/erikkkwu/reheader/compare/v0.2.0...v0.2.1)
