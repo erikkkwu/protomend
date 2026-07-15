@@ -48,7 +48,7 @@ function download(): void {
   const url = URL.createObjectURL(blob);
   const link = document.createElement('a');
   link.href = url;
-  link.download = 'reheader-settings.json';
+  link.download = 'protomend-settings.json';
   link.click();
   URL.revokeObjectURL(url);
   downloaded.value = true;

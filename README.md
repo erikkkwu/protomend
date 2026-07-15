@@ -1,4 +1,4 @@
-# Reheader
+# Protomend
 
 An HTTP request/response **header modifier** — built with
 **WXT + Vue 3 + TypeScript**. Scope is intentionally limited to core header

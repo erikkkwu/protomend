@@ -1,6 +1,6 @@
 {
   "extName": {
-    "message": "Reheader"
+    "message": "Protomend"
   },
   "extDescription": {
     "message": "Modify HTTP request and response headers"

@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Reheader — an HTTP request/response header modifier built with
+Protomend — an HTTP request/response header modifier built with
 **WXT + Vue 3 + TypeScript**. Scope is deliberately limited to header
 modification: profiles of request/response header rules plus global exclude
 filters. Redirects, cookie tooling, and on-page tools are out of scope.

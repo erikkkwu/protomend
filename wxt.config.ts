@@ -7,7 +7,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   }),
   manifest: {
-    name: 'Reheader',
+    name: 'Protomend',
     description: 'Modify HTTP request and response headers',
     default_locale: 'en',
     permissions: [

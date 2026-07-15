@@ -1,10 +1,10 @@
 {
-  "name": "reheader",
+  "name": "protomend",
   "type": "module",
   "version": "0.2.1",
   "private": true,
   "packageManager": "pnpm@10.16.1",
-  "description": "Reheader: modify HTTP request/response headers via declarativeNetRequest",
+  "description": "Protomend: modify HTTP request/response headers via declarativeNetRequest",
   "license": "MIT",
   "engines": {
     "node": ">=20"

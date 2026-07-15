@@ -1,11 +1,11 @@
-# Contributing to Reheader
+# Contributing to Protomend
 
 Thanks for your interest in contributing! This document covers everything you
 need to get a change from idea to merged PR.
 
 ## Scope
 
-Reheader is deliberately limited to **HTTP header modification**: profiles of
+Protomend is deliberately limited to **HTTP header modification**: profiles of
 request/response header rules plus global exclude filters. Redirects, cookie
 tooling, and on-page tools are out of scope — please open an issue to discuss
 before building a feature outside this scope.

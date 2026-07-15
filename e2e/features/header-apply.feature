@@ -21,9 +21,9 @@ Feature: Header rules apply to network traffic
     Then the subresource request carries header "x-e2e-req" with value "sub-1"
 
   Scenario: Response header is applied to the document response
-    Given profile "Main" has response header "set-cookie" set to "reheader-e2e=doc"
+    Given profile "Main" has response header "set-cookie" set to "protomend-e2e=doc"
     When I visit the test page
-    Then the document response sets cookie "reheader-e2e=doc"
+    Then the document response sets cookie "protomend-e2e=doc"
 
   Scenario: Response header is applied to subresource responses
     Given profile "Main" has response header "x-e2e-resp" set to "sub-2"

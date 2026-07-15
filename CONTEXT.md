@@ -1,4 +1,4 @@
-# Reheader
+# Protomend
 
 A browser extension that modifies HTTP request/response headers via declarativeNetRequest, organized into switchable profiles.
 
