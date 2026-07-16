@@ -1,6 +1,22 @@
 # Changelog
 
 
+## v0.3.1
+
+[compare changes](https://github.com/erikkkwu/protomend/compare/v0.3.0...v0.3.1)
+
+### 🩹 Fixes
+
+- **ui:** Rename missed REHEADER wordmark to PROTOMEND ([41785d3](https://github.com/erikkkwu/protomend/commit/41785d3))
+
+### 🏡 Chore
+
+- Gitignore history folder ([e3ac0b3](https://github.com/erikkkwu/protomend/commit/e3ac0b3))
+
+### ❤️ Contributors
+
+- Erikwu ([@erikkkwu](https://github.com/erikkkwu))
+
 ## v0.3.0
 
 [compare changes](https://github.com/erikkkwu/protomend/compare/v0.2.1...v0.3.0)
