@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.2
+
+[compare changes](https://github.com/erikkkwu/protomend/compare/v0.3.1...v0.3.2)
+
+### 🏡 Chore
+
+- Add Chrome Web Store screenshots and capture script ([954a340](https://github.com/erikkkwu/protomend/commit/954a340))
+
+### ❤️ Contributors
+
+- Erikwu ([@erikkkwu](https://github.com/erikkkwu))
+
 ## v0.3.1
 
 [compare changes](https://github.com/erikkkwu/protomend/compare/v0.3.0...v0.3.1)
