@@ -53,7 +53,7 @@ watch(
           :class="profile?.enabled ? 'bg-signal shadow-[0_0_12px_-2px_var(--color-signal)]' : 'bg-ink-faint'"
         />
         <span class="text-[15px] font-extrabold tracking-[0.14em]">
-          RE<span class="font-semibold text-ink-dim">HEADER</span>
+          PROTO<span class="font-semibold text-ink-dim">MEND</span>
         </span>
         <button
           type="button"
