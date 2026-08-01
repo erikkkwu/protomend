@@ -26,28 +26,28 @@
     "prepare": "simple-git-hooks"
   },
   "dependencies": {
-    "@vueuse/core": "^14.3.0",
-    "@vueuse/integrations": "^14.3.0",
+    "@vueuse/core": "^14.4.0",
+    "@vueuse/integrations": "^14.4.0",
     "fuse.js": "^7.4.2",
-    "vue": "^3.5.39"
+    "vue": "^3.5.40"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^9.1.0",
-    "@playwright/test": "^1.61.1",
-    "@tailwindcss/vite": "^4.3.2",
+    "@antfu/eslint-config": "^9.2.0",
+    "@playwright/test": "^1.62.0",
+    "@tailwindcss/vite": "^4.3.3",
     "@wxt-dev/module-vue": "^1.0.3",
     "changelogen": "^0.6.2",
-    "eslint": "^10.7.0",
+    "eslint": "^10.8.0",
     "eslint-plugin-format": "^2.0.1",
-    "jsdom": "^29.1.1",
-    "lint-staged": "^17.0.8",
+    "jsdom": "^30.0.1",
+    "lint-staged": "^17.2.0",
     "playwright-bdd": "^9.2.0",
     "simple-git-hooks": "^2.13.1",
-    "tailwindcss": "^4.3.2",
-    "typescript": "^5.7.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
     "vitest": "^4.1.10",
-    "vue-tsc": "^2.1.0",
-    "wxt": "^0.20.27"
+    "vue-tsc": "^3.3.8",
+    "wxt": "^0.21.2"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
