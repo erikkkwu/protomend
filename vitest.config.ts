@@ -9,7 +9,7 @@ export default defineConfig({
     },
   },
   test: {
-    include: ['core/**/*.test.ts', 'composables/**/*.test.ts'],
+    include: ['core/**/*.test.ts', 'composables/**/*.test.ts', 'test/**/*.test.ts'],
     environment: 'jsdom',
     setupFiles: ['./test/setup.ts'],
   },

@@ -25,8 +25,13 @@ function updateIcon(config: Config): void {
   void browser.action.setIcon({ path: active ? ICON_ON : ICON_OFF });
 }
 
-export default defineBackground(() => {
+function applyStoredConfig(): void {
   void configStore.load().then(applyConfig);
+}
+
+export default defineBackground(() => {
+  browser.runtime.onInstalled.addListener(applyStoredConfig);
+  browser.runtime.onStartup.addListener(applyStoredConfig);
   configStore.subscribe((config) => {
     void applyConfig(config);
   });
