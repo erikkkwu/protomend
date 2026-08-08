@@ -1,6 +1,18 @@
 # Changelog
 
 
+## v0.3.3
+
+[compare changes](https://github.com/erikkkwu/protomend/compare/v0.3.2...v0.3.3)
+
+### 🩹 Fixes
+
+- **background:** Restore state on browser startup ([8a1e7ce](https://github.com/erikkkwu/protomend/commit/8a1e7ce))
+
+### ❤️ Contributors
+
+- Erikwu ([@erikkkwu](https://github.com/erikkkwu))
+
 ## v0.3.2
 
 [compare changes](https://github.com/erikkkwu/protomend/compare/v0.3.1...v0.3.2)
