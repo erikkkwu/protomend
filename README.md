@@ -1,5 +1,7 @@
 # Protomend
 
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/lgnddbhednmfflibfnnjaiekibfmafmp?label=Chrome%20Web%20Store&logo=googlechrome&logoColor=white)](https://chromewebstore.google.com/detail/protomend/lgnddbhednmfflibfnnjaiekibfmafmp)
+
 An HTTP request/response **header modifier** — built with
 **WXT + Vue 3 + TypeScript**. Scope is intentionally limited to core header
 modification: switchable profiles of request/response header rules, plus global
