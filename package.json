@@ -45,7 +45,7 @@
     "simple-git-hooks": "^2.13.1",
     "tailwindcss": "^4.3.2",
     "typescript": "^5.7.0",
-    "vitest": "^4.1.10",
+    "vitest": "^4.1.11",
     "vue-tsc": "^2.1.0",
     "wxt": "^0.20.27"
   },
